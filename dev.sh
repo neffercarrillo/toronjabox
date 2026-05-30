@@ -15,6 +15,7 @@ echo "🍊 Launching toronjabox..."
 # Run toronjabox with clean, isolated project volume mounts
 podman run -it --rm \
     --name running-toronjabox \
+    --hostname toronjabox \
     -v "$(pwd):/home/$HOST_USER/workspace:Z" \
     -v "$SSH_AUTH_SOCK:/run/ssh-agent.sock:Z" \
     -e SSH_AUTH_SOCK=/run/ssh-agent.sock \
