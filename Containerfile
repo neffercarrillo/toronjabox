@@ -1,0 +1,38 @@
+FROM debian:stable-slim
+
+# Avoid prompts during installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Emacs, sudo, git, and fundamental CLI tools
+RUN apt-get update && apt-get install -y \
+    emacs-nox \
+    git \
+    curl \
+    tmux \
+    htop \
+    build-essential \
+    ripgrep \
+    fd-find \
+    sudo \
+    && rm -rf /var/lib/apt/lists/*
+
+# Define the build argument for the host username
+ARG DEV_USER=developer
+
+# Create the user and configure passwordless sudo
+RUN useradd -m -s /bin/bash ${DEV_USER} && \
+    echo "${DEV_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER ${DEV_USER}
+WORKDIR /home/${DEV_USER}
+
+Clone dotfiles repository directly into the container
+RUN git clone https://github.com/neffercarrillo/dotfiles.git /home/${DEV_USER}/dotfiles
+
+# Run repository's custom setup script
+RUN cd /home/${DEV_USER}/dotfiles && ./setup
+
+# 3. Optional: Trigger Emacs package pre-compilation 
+RUN emacs --batch --eval '(message "Packages synced!")'
+
+CMD ["/bin/bash"]
