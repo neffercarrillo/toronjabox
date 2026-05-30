@@ -26,13 +26,13 @@ RUN useradd -m -s /bin/bash ${DEV_USER} && \
 USER ${DEV_USER}
 WORKDIR /home/${DEV_USER}
 
-Clone dotfiles repository directly into the container
+# Clone dotfiles repository directly into the container
 RUN git clone https://github.com/neffercarrillo/dotfiles.git /home/${DEV_USER}/dotfiles
 
 # Run repository's custom setup script
 RUN cd /home/${DEV_USER}/dotfiles && ./setup
 
-# 3. Optional: Trigger Emacs package pre-compilation 
+# Trigger Emacs package pre-compilation 
 RUN emacs --batch --eval '(message "Packages synced!")'
 
 CMD ["/bin/bash"]
