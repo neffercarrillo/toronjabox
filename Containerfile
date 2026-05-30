@@ -35,4 +35,4 @@ RUN cd /home/${DEV_USER}/dotfiles && ./setup
 # Trigger Emacs package pre-compilation 
 RUN emacs --batch --eval '(message "Packages synced!")'
 
-CMD ["/bin/bash", "-c", "/usr/bin/emacs --daemon && sleep 0.5 && exec /bin/bash"]
+CMD ["/bin/bash", "-c", "/usr/bin/emacs --daemon && sleep 0.5 && cd ~/project && exec /bin/bash"]
