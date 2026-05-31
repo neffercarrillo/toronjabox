@@ -9,9 +9,10 @@ CONTAINER_NAME="running-toronjabox-$TIMESTAMP"
 echo "🍊 Building toronjabox for user: $HOST_USER..."
 
 # Build the image, passing the host username into the Dockerfile
-podman build \
-    --build-arg DEV_USER="$HOST_USER" \
-    -t toronjabox .
+# podman build \
+#     --build-arg DEV_USER="$HOST_USER" \
+#     -t toronjabox .
+podman pull ghcr.io/neffercarrillo/toronjabox:latest
 
 echo "🍊 Launching $CONTAINER_NAME..."
 
