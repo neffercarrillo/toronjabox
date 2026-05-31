@@ -3,6 +3,9 @@
 # Get the username of the current host machine
 HOST_USER=$(whoami)
 
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+CONTAINER_NAME="running-toronjabox-$TIMESTAMP"
+
 echo "🍊 Building toronjabox for user: $HOST_USER..."
 
 # Build the image, passing the host username into the Dockerfile
@@ -10,11 +13,11 @@ podman build \
     --build-arg DEV_USER="$HOST_USER" \
     -t toronjabox .
 
-echo "🍊 Launching toronjabox..."
+echo "🍊 Launching $CONTAINER_NAME..."
 
 # Run toronjabox with clean, isolated project volume mounts
 podman run -it --rm \
-    --name running-toronjabox \
+    --name $CONTAINER_NAME \
     --hostname toronjabox \
     --userns=keep-id \
     -v "$(pwd):/home/$HOST_USER/project:Z" \
