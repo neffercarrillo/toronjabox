@@ -6,6 +6,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install Emacs, sudo, git, and fundamental CLI tools
 RUN apt-get update && apt-get install -y \
     emacs-nox \
+    elpa-go-mode \
+    elpa-yaml-mode \
+    elpa-markdown-mode \
+    vim \
     git \
     curl \
     tmux \
@@ -14,6 +18,12 @@ RUN apt-get update && apt-get install -y \
     ripgrep \
     fd-find \
     sudo \
+    python3 \
+    python3-pip \
+    rakudo \
+    raku-zef \
+    golang \
+    nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Define the build argument for the host username
