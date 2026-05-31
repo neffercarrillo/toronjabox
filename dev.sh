@@ -16,6 +16,7 @@ echo "🍊 Launching toronjabox..."
 podman run -it --rm \
     --name running-toronjabox \
     --hostname toronjabox \
+    --userns=keep-id \
     -v "$(pwd):/home/$HOST_USER/project:Z" \
     -v "$SSH_AUTH_SOCK:/run/ssh-agent.sock:Z" \
     -e SSH_AUTH_SOCK=/run/ssh-agent.sock \
