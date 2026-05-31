@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write # Crucial permission to allow uploading to GHCR
+      packages: write
 
     steps:
       - name: Checkout repository
@@ -30,18 +30,16 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          # GitHub automatically generates a temporary token for authentication
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Podman image
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: ./Containerfile
           push: true
-          # Tags it as 'latest' and attaches the exact git commit SHA for version tracking
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          # Optimizes caching so subsequent builds on GitHub run instantly
           cache-from: type=gha
           cache-to: type=gha,mode=max
