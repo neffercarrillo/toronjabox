@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Define the build argument for the host username
-ARG DEV_USER=developer
+ARG DEV_USER=user
 
 # Create the user and configure passwordless sudo
 RUN useradd -m -s /bin/bash ${DEV_USER} && \
@@ -45,4 +45,4 @@ RUN cd /home/${DEV_USER}/dotfiles && ./setup
 # Trigger Emacs package pre-compilation 
 RUN emacs --batch --eval '(message "Packages synced!")'
 
-CMD ["/bin/bash", "-c", "/usr/bin/emacs --daemon && sleep 0.5 && ([ -d ~/project ] && cd ~/project || [ -d /home/developer/project ] && cd /home/developer/project || cd ~); exec /bin/bash"]
+CMD ["/bin/bash", "-c", "/usr/bin/emacs --daemon && sleep 0.5 && ([ -d ~/project ] && cd ~/project || [ -d /home/user/project ] && cd /home/user/project || cd ~); exec /bin/bash"]
