@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     sudo \
     python3 \
     python3-pip \
+    python3-dotenv \
     rakudo \
     raku-zef \
     golang \
